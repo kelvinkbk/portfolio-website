@@ -1,0 +1,46 @@
+name: Weekly Health Check
+
+on:
+  schedule:
+    # Run every Monday at 9 AM UTC
+    - cron: '0 9 * * 1'
+  workflow_dispatch:
+
+jobs:
+  uptime-check:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Check website is up
+      uses: jtalk/url-health-check-action@v3
+      with:
+        url: https://${{ secrets.NETLIFY_SITE_ID }}.netlify.app
+        max-attempts: 3
+        retry-delay: 5s
+    
+    - name: Lighthouse Performance Check
+      uses: treosh/lighthouse-ci-action@v10
+      with:
+        urls: |
+          https://${{ secrets.NETLIFY_SITE_ID }}.netlify.app
+        uploadArtifacts: true
+        temporaryPublicStorage: true
+    
+    - name: Check broken links
+      uses: lycheeverse/lychee-action@v1
+      with:
+        args: --verbose --no-progress 'https://${{ secrets.NETLIFY_SITE_ID }}.netlify.app'
+        fail: false
+    
+    - name: Notify on failure
+      if: failure()
+      uses: actions/github-script@v6
+      with:
+        script: |
+          github.rest.issues.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title: '🚨 Weekly Health Check Failed',
+            body: 'The weekly health check has detected issues with the website. Please investigate.',
+            labels: ['bug', 'automated']
+          })

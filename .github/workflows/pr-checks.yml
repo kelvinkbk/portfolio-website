@@ -1,0 +1,66 @@
+name: Pull Request Checks
+
+on:
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+    
+    - name: Validate HTML
+      run: |
+        npm install -g html-validate
+        html-validate "*.html"
+    
+    - name: Validate CSS
+      run: |
+        npm install -g stylelint stylelint-config-standard
+        echo '{"extends": "stylelint-config-standard"}' > .stylelintrc.json
+        stylelint "**/*.css"
+    
+    - name: Lint JavaScript
+      run: |
+        npm install -g eslint
+        npx eslint --init
+        eslint "**/*.js"
+    
+    - name: Check file sizes
+      run: |
+        find . -type f \( -name "*.jpg" -o -name "*.png" -o -name "*.gif" \) -size +1M -exec echo "::warning::Large image: {}" \;
+    
+    - name: Lighthouse CI (Preview)
+      uses: treosh/lighthouse-ci-action@v10
+      with:
+        urls: |
+          file://${{ github.workspace }}/index.html
+        uploadArtifacts: true
+        temporaryPublicStorage: true
+
+  preview-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Deploy Preview to Netlify
+      uses: nwtgck/actions-netlify@v2.1
+      with:
+        publish-dir: '.'
+        production-deploy: false
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        deploy-message: "Preview for PR #${{ github.event.number }}"
+        enable-pull-request-comment: true
+      env:
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
