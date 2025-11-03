@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://kelvin-benny-koshy.netlify.app/sitemap.xml
+Sitemap: https://kelvin-benny-koshy.netlify.app/site-map.xml
