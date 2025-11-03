@@ -79,29 +79,8 @@ aosElements.forEach(element => {
     aosObserver.observe(element);
 });
 
-// Form Submission (Netlify Forms ready)
-const contactForm = document.querySelector('.contact-form');
-if (contactForm) {
-    contactForm.addEventListener('submit', async (e) => {
-        // Always let Netlify handle the form if netlify attribute exists
-        if (contactForm.hasAttribute('netlify')) {
-            // Don't prevent default - let Netlify process it
-            // Show a quick message
-            const submitBtn = contactForm.querySelector('button[type="submit"]');
-            const originalText = submitBtn.textContent;
-            submitBtn.textContent = 'Sending...';
-            submitBtn.disabled = true;
-            
-            // Let form submit naturally to Netlify
-            return;
-        }
-        
-        // Fallback for non-Netlify deployment
-        e.preventDefault();
-        alert('Thank you for your message! I will get back to you soon.');
-        contactForm.reset();
-    });
-}
+// Form Submission - Let Netlify handle everything
+// No JavaScript interference needed for Netlify Forms
 
 // Typing Effect for Role Text (Optional Enhancement)
 const roleText = document.querySelector('.role-text');
