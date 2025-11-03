@@ -37,7 +37,7 @@ Technical Skills
 
 Projects & Portfolio
 
-**St. Xavier's ERP** | TypeScript, GWS | [GitHub](https://github.com/kelvinkbk/stxavier-erp)
+**St. Xavier's ERP** | TypeScript, Web Application | [GitHub](https://github.com/kelvinkbk/stxavier-erp)
 - Developed a comprehensive college ERP system for managing student records and administrative workflows
 - Implemented TypeScript for type-safe code and better maintainability
 - Designed database schema for student information and academic tracking
