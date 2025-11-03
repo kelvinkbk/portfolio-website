@@ -83,16 +83,21 @@ aosElements.forEach(element => {
 const contactForm = document.querySelector('.contact-form');
 if (contactForm) {
     contactForm.addEventListener('submit', async (e) => {
-        // If Netlify attributes are present, let Netlify handle it
+        // Always let Netlify handle the form if netlify attribute exists
         if (contactForm.hasAttribute('netlify')) {
-            return; // Let Netlify process the form naturally
+            // Don't prevent default - let Netlify process it
+            // Show a quick message
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Sending...';
+            submitBtn.disabled = true;
+            
+            // Let form submit naturally to Netlify
+            return;
         }
         
-        // Otherwise, handle with alert (fallback)
+        // Fallback for non-Netlify deployment
         e.preventDefault();
-        const formData = new FormData(contactForm);
-        
-        // Show success message
         alert('Thank you for your message! I will get back to you soon.');
         contactForm.reset();
     });
