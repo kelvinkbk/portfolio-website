@@ -604,16 +604,6 @@ console.log(
     return;
   gsap.registerPlugin(ScrollTrigger);
 
-  // Hero — stagger entrance
-  gsap.from(".hero-badge, .hero-title, .hero-description, .hero-cta", {
-    opacity: 0,
-    y: 30,
-    duration: 0.8,
-    stagger: 0.12,
-    ease: "power3.out",
-    delay: 0.3,
-  });
-
   // Section headings — fade in from below
   gsap.utils.toArray(".section-title").forEach((el) => {
     gsap.from(el, {

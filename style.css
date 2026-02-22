@@ -415,6 +415,19 @@ body {
   width: 100%;
 }
 
+/* Hero description — explicit colors for both themes */
+.hero-description {
+  color: #cbd5e1 !important;
+  opacity: 1 !important;
+  font-size: 1.05rem;
+  line-height: 1.75;
+  margin-bottom: 2rem;
+  max-width: 520px;
+}
+[data-theme="light"] .hero-description {
+  color: #334155 !important;
+}
+
 /* Status pill */
 .hero-status {
   display: inline-flex;
