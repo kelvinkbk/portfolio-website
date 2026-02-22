@@ -567,33 +567,60 @@ console.log(
 /* ===== LENIS SMOOTH SCROLL ===== */
 (function initLenis() {
   if (typeof Lenis === "undefined") return;
+
+  // Detect trackpad: trackpads use deltaMode=0 (pixels) with small fractional deltas.
+  // Mouse wheels use deltaMode=1 (lines) or large integer deltas.
+  // We listen once and destroy Lenis if a trackpad is detected — native
+  // momentum scrolling on trackpads is already smooth and Lenis adds lag on top.
+  let isTrackpad = false;
+  let detectionDone = false;
+
+  const detectInput = (e) => {
+    if (detectionDone) return;
+    detectionDone = true;
+    // deltaMode 0 = pixels (trackpad), 1 = lines (mouse wheel)
+    if (e.deltaMode === 0 && Math.abs(e.deltaY) < 50) {
+      isTrackpad = true;
+      lenis.destroy();
+      document.removeEventListener("wheel", detectInput);
+    }
+  };
+  document.addEventListener("wheel", detectInput, { passive: true });
+
   const lenis = new Lenis({
-    duration: 1.2,
+    duration: 1.0,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    smooth: true,
-    mouseMultiplier: 1.0,
-    touchMultiplier: 1.5,
+    smoothWheel: true,
+    smoothTouch: false,
+    wheelMultiplier: 1.0,
+    touchMultiplier: 0,
   });
 
   // Integrate with GSAP ticker if available
   if (typeof gsap !== "undefined") {
-    gsap.ticker.add((time) => lenis.raf(time * 1000));
+    gsap.ticker.add((time) => {
+      if (!isTrackpad) lenis.raf(time * 1000);
+    });
     gsap.ticker.lagSmoothing(0);
   } else {
     function rafLoop(time) {
-      lenis.raf(time);
+      if (!isTrackpad) lenis.raf(time);
       requestAnimationFrame(rafLoop);
     }
     requestAnimationFrame(rafLoop);
   }
 
-  // Override smooth-scroll anchor clicks to use Lenis
+  // Override smooth-scroll anchor clicks to use Lenis (or native if trackpad)
   document.querySelectorAll('a[href^="#"]').forEach((a) => {
     a.addEventListener("click", (e) => {
       const target = document.querySelector(a.getAttribute("href"));
       if (!target) return;
       e.preventDefault();
-      lenis.scrollTo(target, { offset: -80 });
+      if (isTrackpad) {
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      } else {
+        lenis.scrollTo(target, { offset: -80 });
+      }
     });
   });
 })();
