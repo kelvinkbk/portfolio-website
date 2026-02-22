@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#030712"/>
+      <stop offset="100%" stop-color="#0D1117"/>
+    </linearGradient>
+    <linearGradient id="purple" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7C3AED"/>
+      <stop offset="100%" stop-color="#2563EB"/>
+    </linearGradient>
+    <linearGradient id="cyan" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#06B6D4"/>
+      <stop offset="100%" stop-color="#10B981"/>
+    </linearGradient>
+    <linearGradient id="textGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#A78BFA"/>
+      <stop offset="100%" stop-color="#60A5FA"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="20" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Particle dots (decorative) -->
+  <circle cx="750" cy="80"  r="2" fill="#7C3AED" opacity="0.7"/>
+  <circle cx="820" cy="140" r="1.5" fill="#06B6D4" opacity="0.6"/>
+  <circle cx="920" cy="100" r="2.5" fill="#7C3AED" opacity="0.5"/>
+  <circle cx="1000" cy="180" r="1.5" fill="#06B6D4" opacity="0.7"/>
+  <circle cx="860"  cy="220" r="2"  fill="#A78BFA" opacity="0.6"/>
+  <circle cx="1050" cy="280" r="3"  fill="#7C3AED" opacity="0.4"/>
+  <circle cx="780"  cy="300" r="1.5" fill="#06B6D4" opacity="0.5"/>
+  <circle cx="970"  cy="350" r="2"  fill="#A78BFA" opacity="0.6"/>
+  <circle cx="840"  cy="420" r="1.5" fill="#7C3AED" opacity="0.5"/>
+  <circle cx="1100" cy="400" r="2.5" fill="#06B6D4" opacity="0.4"/>
+  <circle cx="700"  cy="500" r="2"  fill="#A78BFA" opacity="0.3"/>
+  <circle cx="1050" cy="520" r="1.5" fill="#7C3AED" opacity="0.5"/>
+  <!-- Connection lines -->
+  <line x1="750" y1="80"  x2="820" y2="140" stroke="#7C3AED" stroke-width="0.8" opacity="0.3"/>
+  <line x1="820" y1="140" x2="920" y2="100" stroke="#06B6D4" stroke-width="0.8" opacity="0.25"/>
+  <line x1="920" y1="100" x2="1000" y2="180" stroke="#7C3AED" stroke-width="0.8" opacity="0.3"/>
+  <line x1="1000" y1="180" x2="860" y2="220" stroke="#06B6D4" stroke-width="0.8" opacity="0.25"/>
+  <line x1="860"  y1="220" x2="1050" y2="280" stroke="#7C3AED" stroke-width="0.8" opacity="0.2"/>
+  <line x1="780"  y1="300" x2="970"  y2="350" stroke="#06B6D4" stroke-width="0.8" opacity="0.25"/>
+  <line x1="970"  y1="350" x2="840"  y2="420" stroke="#A78BFA" stroke-width="0.8" opacity="0.2"/>
+  <line x1="840"  y1="420" x2="1100" y2="400" stroke="#06B6D4" stroke-width="0.8" opacity="0.2"/>
+
+  <!-- Glow blob -->
+  <ellipse cx="150" cy="315" rx="180" ry="160" fill="#7C3AED" opacity="0.07" filter="url(#softGlow)"/>
+  <ellipse cx="1100" cy="315" rx="130" ry="120" fill="#06B6D4" opacity="0.05" filter="url(#softGlow)"/>
+
+  <!-- Avatar square -->
+  <rect x="80" y="160" width="120" height="120" rx="24" fill="url(#purple)" filter="url(#glow)"/>
+  <text x="140" y="235" font-family="Georgia, serif" font-size="56" font-weight="900" fill="white" text-anchor="middle">K</text>
+
+  <!-- Name -->
+  <text x="230" y="215" font-family="Arial, Helvetica, sans-serif" font-size="52" font-weight="900" fill="url(#textGrad)" letter-spacing="-1">Kelvin Benny Koshy</text>
+
+  <!-- Title -->
+  <text x="232" y="255" font-family="Arial, Helvetica, sans-serif" font-size="24" fill="#A78BFA" font-weight="600">BCA Student &amp; Developer  ·  Jaipur, India</text>
+
+  <!-- Divider -->
+  <line x1="80" y1="310" x2="640" y2="310" stroke="url(#purple)" stroke-width="1.5" opacity="0.4"/>
+
+  <!-- Pill badges -->
+  <!-- Badge 1 -->
+  <rect x="80"  y="335" width="160" height="40" rx="20" fill="#7C3AED" fill-opacity="0.15" stroke="#7C3AED" stroke-width="1.2" stroke-opacity="0.4"/>
+  <text x="160" y="361" font-family="Arial, sans-serif" font-size="17" fill="#A78BFA" text-anchor="middle" font-weight="700">🐍 Python &amp; AI</text>
+  <!-- Badge 2 -->
+  <rect x="255" y="335" width="165" height="40" rx="20" fill="#06B6D4" fill-opacity="0.12" stroke="#06B6D4" stroke-width="1.2" stroke-opacity="0.4"/>
+  <text x="337" y="361" font-family="Arial, sans-serif" font-size="17" fill="#67E8F9" text-anchor="middle" font-weight="700">💻 Full Stack</text>
+  <!-- Badge 3 -->
+  <rect x="435" y="335" width="200" height="40" rx="20" fill="#A78BFA" fill-opacity="0.12" stroke="#A78BFA" stroke-width="1.2" stroke-opacity="0.4"/>
+  <text x="535" y="361" font-family="Arial, sans-serif" font-size="17" fill="#C4B5FD" text-anchor="middle" font-weight="700">⭐ 10+ Projects</text>
+
+  <!-- Tech tags row -->
+  <text x="80"  y="425" font-family="Arial, sans-serif" font-size="15" fill="#9CA3AF">TypeScript</text>
+  <text x="190" y="425" font-family="Arial, sans-serif" font-size="15" fill="#9CA3AF">·</text>
+  <text x="205" y="425" font-family="Arial, sans-serif" font-size="15" fill="#9CA3AF">Computer Vision</text>
+  <text x="370" y="425" font-family="Arial, sans-serif" font-size="15" fill="#9CA3AF">·</text>
+  <text x="385" y="425" font-family="Arial, sans-serif" font-size="15" fill="#9CA3AF">AI/LLM</text>
+  <text x="455" y="425" font-family="Arial, sans-serif" font-size="15" fill="#9CA3AF">·</text>
+  <text x="470" y="425" font-family="Arial, sans-serif" font-size="15" fill="#9CA3AF">OpenCV</text>
+  <text x="550" y="425" font-family="Arial, sans-serif" font-size="15" fill="#9CA3AF">·</text>
+  <text x="565" y="425" font-family="Arial, sans-serif" font-size="15" fill="#9CA3AF">MediaPipe</text>
+
+  <!-- Bottom bar -->
+  <rect x="0" y="570" width="1200" height="60" fill="#0D1117" opacity="0.8"/>
+  <line x1="0" y1="570" x2="1200" y2="570" stroke="#7C3AED" stroke-width="1" opacity="0.5"/>
+  <!-- URL -->
+  <circle cx="105" cy="600" r="5" fill="#7C3AED"/>
+  <text x="120" y="605" font-family="Arial, monospace, sans-serif" font-size="18" fill="#6B7280">kelvin-benny-koshy.netlify.app</text>
+  <!-- Right label -->
+  <text x="1120" y="605" font-family="Arial, sans-serif" font-size="16" fill="#374151" text-anchor="end">Portfolio 2026</text>
+</svg>

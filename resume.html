@@ -1,131 +1,952 @@
 <!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Kelvin Benny Koshy — Resume</title>
-  <style>
-    :root{--bg:#0F0F1E;--card:#121224;--accent:#6C63FF;--muted:#B8B8D1;--white:#fff}
-    body{font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--white);padding:40px}
-    .page{max-width:900px;margin:0 auto;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border-radius:12px;padding:36px}
-    h1{font-size:28px;margin:0 0 6px}
-    h2{font-size:18px;margin:20px 0 8px;color:var(--accent)}
-    p.lead{color:var(--muted);margin:6px 0 18px}
-    .two{display:flex;gap:24px}
-    .left{flex:1}
-    .right{flex:2}
-    .section{margin-bottom:18px}
-    ul{margin:6px 0 0 18px}
-    a{color:var(--accent)}
-    .meta{font-size:14px;color:var(--muted)}
-    .badge{display:inline-block;padding:6px 10px;border-radius:8px;background:rgba(108,99,255,0.12);color:var(--accent);font-weight:600;margin-right:8px}
-    .projects .card{background:rgba(255,255,255,0.02);padding:12px;border-radius:8px;margin-bottom:10px}
-    .print-hide{display:inline-block;margin-top:12px}
-    @media print{body{background:#fff;color:#000} .page{background:#fff;border:0} .print-hide{display:none}}
-  </style>
-</head>
-<body>
-  <div class="page">
-    <header>
-      <h1>Kelvin Benny Koshy</h1>
-      <div class="meta">Student & Developer — BCA, St. Xavier's College, Jaipur</div>
-      <p class="lead">Motivated BCA student with strong foundation in web development and programming. Experienced in full-stack applications, ERP systems, and system utilities. Seeking internships in software/web development.</p>
-      <div style="margin-top:12px">
-        <span class="badge">Jaipur, India</span>
-        <span class="badge">kelvinkbk1304@gmail.com</span>
-        <span class="badge"><a href="https://kelvin-benny-koshy.netlify.app" target="_blank">kelvin-benny-koshy.netlify.app</a></span>
-        <span class="badge"><a href="https://github.com/kelvinkbk" target="_blank">github.com/kelvinkbk</a></span>
-      </div>
-    </header>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kelvin Benny Koshy — Resume</title>
+    <meta
+      name="description"
+      content="Resume of Kelvin Benny Koshy — BCA Student, Web Developer & AI Enthusiast based in Jaipur, India."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <style>
+      /* ── TOKENS ─────────────────────────────── */
+      :root {
+        --p: #7c3aed;
+        --pl: #a78bfa;
+        --acc: #06b6d4;
+        --g1: linear-gradient(135deg, #7c3aed, #2563eb);
+        --g2: linear-gradient(135deg, #06b6d4, #10b981);
+        --bg0: #030712;
+        --bg1: #0d1117;
+        --bg2: #161b27;
+        --t1: #f9fafb;
+        --t2: #9ca3af;
+        --bdr: rgba(255, 255, 255, 0.07);
+        --ff: "Inter", sans-serif;
+        --fd: "Space Grotesk", sans-serif;
+        --tr: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      [data-theme="light"] {
+        --bg0: #f8fafc;
+        --bg1: #ffffff;
+        --bg2: #f1f5f9;
+        --t1: #0f172a;
+        --t2: #475569;
+        --bdr: rgba(0, 0, 0, 0.08);
+        --p: #6d28d9;
+        --pl: #7c3aed;
+      }
 
-    <div class="two" style="margin-top:18px">
-      <div class="left">
-        <div class="section">
-          <h2>Technical Skills</h2>
-          <p><strong>Languages:</strong> Python, TypeScript, C#, JavaScript, HTML5, CSS3</p>
-          <p><strong>Web:</strong> Responsive Design, REST APIs, Modern UI/UX, Frontend Development</p>
-          <p><strong>Tools:</strong> Git, GitHub, VS Code, Command Line</p>
-          <p><strong>Database:</strong> SQL fundamentals</p>
-          <p><strong>Learning:</strong> React, AI/ML, Computer Vision</p>
-        </div>
+      /* ── RESET ──────────────────────────────── */
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: var(--ff);
+        background: var(--bg0);
+        color: var(--t1);
+        line-height: 1.6;
+        min-height: 100vh;
+        transition:
+          background 0.4s,
+          color 0.4s;
+      }
 
-        <div class="section">
-          <h2>Education</h2>
-          <p><strong>BCA</strong><br>St. Xavier's College, Jaipur — University of Rajasthan<br><span class="meta">Expected 2027</span></p>
-        </div>
+      /* ── TOP BAR ────────────────────────────── */
+      .top-bar {
+        position: sticky;
+        top: 0;
+        background: rgba(3, 7, 18, 0.85);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--bdr);
+        z-index: 100;
+        padding: 0.75rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: background 0.4s;
+      }
+      [data-theme="light"] .top-bar {
+        background: rgba(248, 250, 252, 0.9);
+      }
+      .top-bar-brand {
+        font-family: var(--fd);
+        font-weight: 700;
+        font-size: 1rem;
+        background: var(--g1);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .top-bar-actions {
+        display: flex;
+        gap: 0.75rem;
+        align-items: center;
+      }
+      .btn-top {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.45rem 1rem;
+        border-radius: 100px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        text-decoration: none;
+        cursor: pointer;
+        font-family: var(--ff);
+        transition: var(--tr);
+        border: none;
+      }
+      .btn-print {
+        background: var(--g1);
+        color: #fff;
+        box-shadow: 0 4px 16px rgba(124, 58, 237, 0.3);
+      }
+      .btn-print:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(124, 58, 237, 0.5);
+      }
+      .btn-back {
+        background: transparent;
+        color: var(--t2);
+        border: 1px solid var(--bdr);
+      }
+      .btn-back:hover {
+        color: var(--t1);
+        border-color: rgba(124, 58, 237, 0.5);
+      }
+      .theme-btn {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: var(--bg2);
+        border: 1px solid var(--bdr);
+        color: var(--t2);
+        cursor: pointer;
+        transition: var(--tr);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85rem;
+      }
+      .theme-btn:hover {
+        color: var(--t1);
+        border-color: var(--pl);
+      }
 
-        <div class="section">
-          <h2>Availability</h2>
-          <p>Open to internships, freelance projects, or collaboration. Available for remote work or in-person opportunities in Jaipur (due to college commitments).</p>
-        </div>
-      </div>
+      /* ── PAGE WRAPPER ───────────────────────── */
+      .page {
+        max-width: 920px;
+        margin: 2.5rem auto;
+        padding: 0 1.5rem 4rem;
+      }
 
-      <div class="right">
-        <div class="section projects">
-          <h2>Selected Projects</h2>
+      /* ── HEADER ─────────────────────────────── */
+      .resume-header {
+        display: grid;
+        grid-template-columns: 80px 1fr auto;
+        gap: 1.5rem;
+        align-items: start;
+        margin-bottom: 2rem;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid var(--bdr);
+      }
+      .header-avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 16px;
+        background: var(--g1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--fd);
+        font-size: 2rem;
+        font-weight: 800;
+        color: #fff;
+        flex-shrink: 0;
+        box-shadow: 0 0 30px rgba(124, 58, 237, 0.4);
+        overflow: hidden;
+      }
+      .header-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .header-name {
+        font-family: var(--fd);
+        font-size: 1.8rem;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        background: var(--g1);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1.1;
+        margin-bottom: 0.25rem;
+      }
+      .header-title {
+        font-size: 0.9rem;
+        color: var(--pl);
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+      .header-lead {
+        font-size: 0.88rem;
+        color: var(--t2);
+        line-height: 1.7;
+        max-width: 480px;
+      }
+      .header-contacts {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+        align-items: flex-end;
+      }
+      .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.8rem;
+        color: var(--t2);
+        text-decoration: none;
+        transition: var(--tr);
+      }
+      .contact-item:hover {
+        color: var(--pl);
+      }
+      .contact-item i {
+        color: var(--pl);
+        width: 14px;
+        text-align: center;
+      }
 
-          <div class="card">
-            <strong>St. Xavier's ERP</strong>
-            <div class="meta">TypeScript • Web Application • MIT License</div>
-            <p>Developed comprehensive college ERP system managing student records and administrative workflows. Implemented TypeScript for type-safe code and designed database schema for academic tracking.</p>
-            <p><strong>Impact:</strong> Streamlined college administration with digital solutions</p>
-            <div><a href="https://github.com/kelvinkbk/stxavier-erp" target="_blank">View Project →</a></div>
-          </div>
+      /* ── LAYOUT ─────────────────────────────── */
+      .resume-body {
+        display: grid;
+        grid-template-columns: 240px 1fr;
+        gap: 2rem;
+      }
+      .col-left {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+      .col-right {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
 
-          <div class="card">
-            <strong>OpenFences</strong>
-            <div class="meta">C# • .NET Framework • Desktop App</div>
-            <p>Built desktop utility using C# and .NET, focusing on system organization and network management tools. Implemented clean code architecture and modular design patterns.</p>
-            <p><strong>Skills:</strong> OOP, Desktop development, Modular design</p>
-            <div><a href="https://github.com/kelvinkbk/OpenFences" target="_blank">View Project →</a></div>
-          </div>
+      /* ── SECTION ────────────────────────────── */
+      .r-section {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+      .r-section-title {
+        font-size: 0.7rem;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--pl);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid var(--bdr);
+      }
+      .r-section-title i {
+        font-size: 0.7rem;
+      }
 
-          <div class="card">
-            <strong>Anidox</strong>
-            <div class="meta">HTML5 • CSS3 • JavaScript • Responsive</div>
-            <p>Created responsive web application with modern UI/UX principles, interactive components, and smooth animations. Ensured cross-browser compatibility and mobile responsiveness.</p>
-            <p><strong>Skills:</strong> Frontend development, Responsive design, UX</p>
-            <div><a href="https://github.com/kelvinkbk/anidox" target="_blank">View Project →</a></div>
-          </div>
+      /* ── SKILL BARS ─────────────────────────── */
+      .skill-row {
+        margin-bottom: 0.6rem;
+      }
+      .skill-label {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.25rem;
+        font-size: 0.82rem;
+      }
+      .skill-label span:last-child {
+        color: var(--t2);
+        font-size: 0.75rem;
+      }
+      .skill-track {
+        height: 4px;
+        background: rgba(255, 255, 255, 0.06);
+        border-radius: 4px;
+        overflow: hidden;
+      }
+      [data-theme="light"] .skill-track {
+        background: rgba(0, 0, 0, 0.06);
+      }
+      .skill-fill {
+        height: 100%;
+        border-radius: 4px;
+        background: var(--g1);
+        width: 0;
+        transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+      }
 
-          <div class="card">
-            <strong>Algorithms & Data Structures</strong>
-            <div class="meta">Python • Problem Solving</div>
-            <p>Practice repository covering sorting algorithms, data structures, and coding challenges. Continuous learning project for computer science fundamentals and algorithmic thinking.</p>
-            <p><strong>Skills:</strong> Problem-solving, Python proficiency, CS fundamentals</p>
-            <div><a href="https://github.com/kelvinkbk/PROJECT-1" target="_blank">View Project →</a></div>
-          </div>
+      /* ── SKILL TAGS ─────────────────────────── */
+      .skill-tag-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+      }
+      .skill-tag {
+        padding: 0.2rem 0.6rem;
+        background: rgba(124, 58, 237, 0.1);
+        border: 1px solid rgba(124, 58, 237, 0.2);
+        border-radius: 100px;
+        font-size: 0.73rem;
+        color: var(--pl);
+        font-weight: 600;
+      }
+      [data-theme="light"] .skill-tag {
+        background: rgba(109, 40, 217, 0.08);
+      }
 
-        </div>
+      /* ── EDU / AVAIL ────────────────────────── */
+      .edu-item h4 {
+        font-size: 0.9rem;
+        font-weight: 700;
+        margin-bottom: 0.1rem;
+      }
+      .edu-item p {
+        font-size: 0.82rem;
+        color: var(--t2);
+      }
+      .avail-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.3rem 0.75rem;
+        background: rgba(16, 185, 129, 0.1);
+        border: 1px solid rgba(16, 185, 129, 0.25);
+        border-radius: 100px;
+        font-size: 0.78rem;
+        color: #10b981;
+        font-weight: 600;
+      }
+      .avail-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #10b981;
+        animation: pulse 2s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.5;
+          transform: scale(1.3);
+        }
+      }
 
-        <div class="section">
-          <h2>Experience & Activities</h2>
-          <p><strong>Independent Developer</strong> (2024 - Present)</p>
-          <ul style="margin-top:6px">
-            <li>Developed multiple full-stack applications from concept to deployment</li>
-            <li>Maintained active GitHub profile with public repositories</li>
-            <li>Self-taught in modern web technologies and best practices</li>
-          </ul>
-          <p style="margin-top:12px"><strong>Key Achievements:</strong></p>
-          <ul style="margin-top:6px">
-            <li>Built college ERP system handling multiple workflows</li>
-            <li>Created portfolio website with modern animations</li>
-            <li>Developed cross-platform applications in multiple languages</li>
-          </ul>
-        </div>
+      /* ── PROJECT CARDS ──────────────────────── */
+      .project-card {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid var(--bdr);
+        border-radius: 12px;
+        padding: 1rem 1.1rem;
+        transition: var(--tr);
+      }
+      [data-theme="light"] .project-card {
+        background: var(--bg2);
+      }
+      .project-card:hover {
+        border-color: rgba(124, 58, 237, 0.35);
+        transform: translateX(3px);
+      }
+      .project-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 0.25rem;
+        gap: 0.5rem;
+      }
+      .project-name {
+        font-size: 0.92rem;
+        font-weight: 700;
+      }
+      .project-link {
+        font-size: 0.75rem;
+        color: var(--pl);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        flex-shrink: 0;
+        transition: var(--tr);
+      }
+      .project-link:hover {
+        color: var(--acc);
+      }
+      .project-meta {
+        font-size: 0.75rem;
+        color: var(--t2);
+        margin-bottom: 0.5rem;
+      }
+      .project-desc {
+        font-size: 0.82rem;
+        color: var(--t2);
+        line-height: 1.65;
+        margin-bottom: 0.6rem;
+      }
+      .project-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.3rem;
+      }
+      .project-tag {
+        padding: 0.12rem 0.5rem;
+        border-radius: 100px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        background: rgba(6, 182, 212, 0.1);
+        border: 1px solid rgba(6, 182, 212, 0.2);
+        color: var(--acc);
+      }
 
-        <div class="section">
-          <h2>Notes</h2>
-          <p class="meta">This HTML resume is printable (File → Print → Save as PDF) and can be used as a downloadable CV on your portfolio site.</p>
-        </div>
+      /* ── EXPERIENCE ─────────────────────────── */
+      .exp-item {
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--bdr);
+      }
+      .exp-item:last-child {
+        border: 0;
+        padding: 0;
+      }
+      .exp-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 0.25rem;
+      }
+      .exp-title {
+        font-size: 0.9rem;
+        font-weight: 700;
+      }
+      .exp-date {
+        font-size: 0.75rem;
+        color: var(--pl);
+        font-weight: 600;
+        flex-shrink: 0;
+      }
+      .exp-company {
+        font-size: 0.8rem;
+        color: var(--t2);
+        margin-bottom: 0.4rem;
+      }
+      .exp-points {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+      }
+      .exp-points li {
+        font-size: 0.82rem;
+        color: var(--t2);
+        line-height: 1.55;
+        padding-left: 1rem;
+        position: relative;
+      }
+      .exp-points li::before {
+        content: "→";
+        position: absolute;
+        left: 0;
+        color: var(--pl);
+        font-size: 0.75rem;
+      }
 
-        <div class="print-hide">
-          <button onclick="window.print()" style="padding:10px 14px;border-radius:8px;border:0;background:var(--accent);color:#fff;cursor:pointer">Print / Save as PDF</button>
-        </div>
+      /* ── PRINT ──────────────────────────────── */
+      @media print {
+        .top-bar,
+        .btn-back,
+        .theme-btn {
+          display: none !important;
+        }
+        body {
+          background: #fff;
+          color: #000;
+        }
+        .page {
+          margin: 0;
+          max-width: 100%;
+        }
+        .project-card,
+        .r-section-title,
+        .header-name {
+          -webkit-text-fill-color: initial !important;
+          background: none !important;
+          color: #000 !important;
+        }
+        .contact-item,
+        .project-link {
+          color: #6d28d9;
+        }
+        .skill-fill {
+          print-color-adjust: exact;
+          -webkit-print-color-adjust: exact;
+        }
+        .project-card {
+          border: 1px solid #ccc;
+        }
+        .skill-tag {
+          border: 1px solid #ccc;
+          color: #6d28d9;
+          background: rgba(109, 40, 217, 0.06);
+        }
+      }
 
+      /* ── RESPONSIVE ─────────────────────────── */
+      @media (max-width: 720px) {
+        .resume-header {
+          grid-template-columns: 60px 1fr;
+        }
+        .header-contacts {
+          grid-column: 1/-1;
+          align-items: flex-start;
+        }
+        .resume-body {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- TOP BAR -->
+    <div class="top-bar">
+      <div class="top-bar-brand">✦ Kelvin Benny Koshy — Resume</div>
+      <div class="top-bar-actions">
+        <button
+          class="theme-btn"
+          id="theme-btn"
+          title="Toggle theme"
+          aria-label="Toggle theme"
+        >
+          <i class="fas fa-moon" id="th-icon"></i>
+        </button>
+        <a href="index.html" class="btn-top btn-back"
+          ><i class="fas fa-arrow-left"></i> Portfolio</a
+        >
+        <button class="btn-top btn-print" onclick="window.print()">
+          <i class="fas fa-download"></i> Save PDF
+        </button>
       </div>
     </div>
 
-  </div>
-</body>
+    <div class="page">
+      <!-- HEADER -->
+      <header class="resume-header">
+        <div class="header-avatar">
+          <img
+            src="profile.jpg"
+            alt="Kelvin Benny Koshy"
+            onerror="this.parentElement.textContent = 'K'"
+          />
+        </div>
+        <div class="header-info">
+          <h1 class="header-name">Kelvin Benny Koshy</h1>
+          <div class="header-title">
+            BCA Student &amp; Independent Developer
+          </div>
+          <p class="header-lead">
+            Motivated developer with hands-on experience building AI assistants,
+            ERP systems, and web applications. Passionate about computer vision,
+            full-stack development, and building things that matter.
+          </p>
+        </div>
+        <div class="header-contacts">
+          <a href="mailto:kelvinkbk1304@gmail.com" class="contact-item"
+            ><i class="fas fa-envelope"></i> kelvinkbk1304@gmail.com</a
+          >
+          <a
+            href="https://github.com/kelvinkbk"
+            target="_blank"
+            rel="noopener"
+            class="contact-item"
+            ><i class="fab fa-github"></i> github.com/kelvinkbk</a
+          >
+          <a
+            href="https://kelvin-benny-koshy.netlify.app"
+            target="_blank"
+            rel="noopener"
+            class="contact-item"
+            ><i class="fas fa-globe"></i> kelvin-benny-koshy.netlify.app</a
+          >
+          <span class="contact-item"
+            ><i class="fas fa-map-marker-alt"></i> Jaipur, Rajasthan,
+            India</span
+          >
+        </div>
+      </header>
+
+      <div class="resume-body">
+        <!-- LEFT COLUMN -->
+        <aside class="col-left">
+          <!-- SKILLS BAR -->
+          <div class="r-section" id="skills-section">
+            <div class="r-section-title">
+              <i class="fas fa-bolt"></i> Core Skills
+            </div>
+            <div>
+              <div class="skill-row">
+                <div class="skill-label">
+                  <span>Python</span><span>90%</span>
+                </div>
+                <div class="skill-track">
+                  <div class="skill-fill" data-w="90"></div>
+                </div>
+              </div>
+              <div class="skill-row">
+                <div class="skill-label">
+                  <span>Web Dev (HTML/CSS/JS)</span><span>88%</span>
+                </div>
+                <div class="skill-track">
+                  <div class="skill-fill" data-w="88"></div>
+                </div>
+              </div>
+              <div class="skill-row">
+                <div class="skill-label">
+                  <span>TypeScript</span><span>85%</span>
+                </div>
+                <div class="skill-track">
+                  <div class="skill-fill" data-w="85"></div>
+                </div>
+              </div>
+              <div class="skill-row">
+                <div class="skill-label">
+                  <span>AI / Machine Learning</span><span>83%</span>
+                </div>
+                <div class="skill-track">
+                  <div class="skill-fill" data-w="83"></div>
+                </div>
+              </div>
+              <div class="skill-row">
+                <div class="skill-label">
+                  <span>Database / SQL</span><span>80%</span>
+                </div>
+                <div class="skill-track">
+                  <div class="skill-fill" data-w="80"></div>
+                </div>
+              </div>
+              <div class="skill-row">
+                <div class="skill-label">
+                  <span>Computer Vision (OpenCV)</span><span>78%</span>
+                </div>
+                <div class="skill-track">
+                  <div class="skill-fill" data-w="78"></div>
+                </div>
+              </div>
+              <div class="skill-row">
+                <div class="skill-label"><span>C#</span><span>72%</span></div>
+                <div class="skill-track">
+                  <div class="skill-fill" data-w="72"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TECH TAGS -->
+          <div class="r-section">
+            <div class="r-section-title">
+              <i class="fas fa-layer-group"></i> Technologies
+            </div>
+            <div class="skill-tag-grid">
+              <span class="skill-tag">Python</span>
+              <span class="skill-tag">TypeScript</span>
+              <span class="skill-tag">JavaScript</span>
+              <span class="skill-tag">C#</span>
+              <span class="skill-tag">HTML5</span>
+              <span class="skill-tag">CSS3</span>
+              <span class="skill-tag">.NET</span>
+              <span class="skill-tag">Node.js</span>
+              <span class="skill-tag">SQL</span>
+              <span class="skill-tag">Git</span>
+              <span class="skill-tag">GitHub</span>
+              <span class="skill-tag">OpenCV</span>
+              <span class="skill-tag">MediaPipe</span>
+              <span class="skill-tag">Gemini API</span>
+              <span class="skill-tag">REST APIs</span>
+              <span class="skill-tag">Netlify</span>
+            </div>
+          </div>
+
+          <!-- EDUCATION -->
+          <div class="r-section">
+            <div class="r-section-title">
+              <i class="fas fa-graduation-cap"></i> Education
+            </div>
+            <div class="edu-item">
+              <h4>Bachelor of Computer Applications</h4>
+              <p>St. Xavier's College, Jaipur</p>
+              <p>University of Rajasthan · 2023 – 2026</p>
+            </div>
+          </div>
+
+          <!-- AVAILABILITY -->
+          <div class="r-section">
+            <div class="r-section-title">
+              <i class="fas fa-satellite-dish"></i> Availability
+            </div>
+            <div class="avail-pill">
+              <div class="avail-dot"></div>
+              Open to opportunities
+            </div>
+            <p
+              style="
+                font-size: 0.8rem;
+                color: var(--t2);
+                margin-top: 0.5rem;
+                line-height: 1.6;
+              "
+            >
+              Available for internships, freelance projects &amp;
+              collaborations. Open to remote work and in-person roles in Jaipur.
+            </p>
+          </div>
+        </aside>
+
+        <!-- RIGHT COLUMN -->
+        <main class="col-right">
+          <!-- EXPERIENCE -->
+          <div class="r-section">
+            <div class="r-section-title">
+              <i class="fas fa-briefcase"></i> Experience
+            </div>
+            <div class="exp-item">
+              <div class="exp-header">
+                <div class="exp-title">Independent Developer</div>
+                <span class="exp-date">2024 – Present</span>
+              </div>
+              <div class="exp-company">
+                Self-employed · Jaipur, India (Remote)
+              </div>
+              <ul class="exp-points">
+                <li>
+                  Built 10+ projects spanning web apps, AI assistants, desktop
+                  utilities, and ERP systems
+                </li>
+                <li>
+                  Developed
+                  <strong style="color: var(--t1)">OmniDesktop AI</strong> — a
+                  multi-modal AI assistant combining LLMs, voice I/O, and
+                  computer vision via webcam
+                </li>
+                <li>
+                  Created
+                  <strong style="color: var(--t1)"
+                    >gesture control system</strong
+                  >
+                  using MediaPipe + OpenCV for real-time hand tracking and 3D
+                  drawing
+                </li>
+                <li>
+                  Designed and deployed production websites via Netlify with
+                  CI/CD
+                </li>
+                <li>
+                  Maintained active open-source GitHub profile with public
+                  repositories
+                </li>
+              </ul>
+            </div>
+            <div class="exp-item">
+              <div class="exp-header">
+                <div class="exp-title">BCA Student</div>
+                <span class="exp-date">2023 – 2026</span>
+              </div>
+              <div class="exp-company">
+                St. Xavier's College, Jaipur · University of Rajasthan
+              </div>
+              <ul class="exp-points">
+                <li>
+                  Built the college's ERP system as a practical project — now
+                  used for administrative workflows
+                </li>
+                <li>
+                  Studied data structures, algorithms, database management, and
+                  software engineering
+                </li>
+                <li>
+                  Applied academic learning directly to real projects throughout
+                  the degree
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- PROJECTS -->
+          <div class="r-section">
+            <div class="r-section-title">
+              <i class="fas fa-folder-open"></i> Selected Projects
+            </div>
+
+            <div class="project-card">
+              <div class="project-header">
+                <span class="project-name">St. Xavier's ERP System</span>
+                <a
+                  href="https://github.com/kelvinkbk/stxavier-erp"
+                  target="_blank"
+                  rel="noopener"
+                  class="project-link"
+                  ><i class="fab fa-github"></i> View Code</a
+                >
+              </div>
+              <div class="project-meta">
+                TypeScript · Web Application · MIT License
+              </div>
+              <p class="project-desc">
+                Comprehensive college ERP system managing student records,
+                academic tracking, and administrative workflows. Built with
+                TypeScript for type safety and designed a normalized database
+                schema for multi-entity academic tracking.
+              </p>
+              <div class="project-tags">
+                <span class="project-tag">TypeScript</span
+                ><span class="project-tag">Database</span
+                ><span class="project-tag">Web App</span>
+              </div>
+            </div>
+
+            <div class="project-card">
+              <div class="project-header">
+                <span class="project-name">OmniDesktop AI Assistant</span>
+                <a
+                  href="https://github.com/kelvinkbk"
+                  target="_blank"
+                  rel="noopener"
+                  class="project-link"
+                  ><i class="fab fa-github"></i> View Profile</a
+                >
+              </div>
+              <div class="project-meta">
+                Python · Gemini API · OpenCV · MediaPipe
+              </div>
+              <p class="project-desc">
+                Sophisticated AI desktop assistant with multi-modal
+                capabilities: LLM-powered conversation (Gemini + Groq fallback),
+                voice input/output via SAPI, real-time computer vision, web
+                search, and desktop automation skills.
+              </p>
+              <div class="project-tags">
+                <span class="project-tag">Python</span
+                ><span class="project-tag">AI/LLM</span
+                ><span class="project-tag">Computer Vision</span>
+              </div>
+            </div>
+
+            <div class="project-card">
+              <div class="project-header">
+                <span class="project-name">Gesture Control System</span>
+                <a
+                  href="https://github.com/kelvinkbk"
+                  target="_blank"
+                  rel="noopener"
+                  class="project-link"
+                  ><i class="fab fa-github"></i> View Profile</a
+                >
+              </div>
+              <div class="project-meta">
+                Python · OpenCV · MediaPipe · 3D Graphics
+              </div>
+              <p class="project-desc">
+                Real-time hand gesture recognition enabling 3D mid-air drawing,
+                virtual HUD control, swipe navigation, and VR-style grab/move
+                interactions. Includes fist-gesture pickup/drop mechanics and
+                multi-stroke save/load via JSON.
+              </p>
+              <div class="project-tags">
+                <span class="project-tag">Python</span
+                ><span class="project-tag">MediaPipe</span
+                ><span class="project-tag">Real-time</span>
+              </div>
+            </div>
+
+            <div class="project-card">
+              <div class="project-header">
+                <span class="project-name">OpenFences</span>
+                <a
+                  href="https://github.com/kelvinkbk/OpenFences"
+                  target="_blank"
+                  rel="noopener"
+                  class="project-link"
+                  ><i class="fab fa-github"></i> View Code</a
+                >
+              </div>
+              <div class="project-meta">C# · .NET Framework · Open Source</div>
+              <p class="project-desc">
+                Open-source desktop utility built in C# and .NET, focused on
+                network management and system organization with clean
+                architecture patterns and modular design.
+              </p>
+              <div class="project-tags">
+                <span class="project-tag">C#</span
+                ><span class="project-tag">.NET</span
+                ><span class="project-tag">Open Source</span>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script>
+      // Theme toggle
+      const htmlEl = document.documentElement;
+      const btn = document.getElementById("theme-btn");
+      const ico = document.getElementById("th-icon");
+      function applyTheme(t) {
+        htmlEl.setAttribute("data-theme", t);
+        localStorage.setItem("portfolio-theme", t);
+        ico.className = t === "dark" ? "fas fa-moon" : "fas fa-sun";
+      }
+      btn?.addEventListener("click", () =>
+        applyTheme(
+          htmlEl.getAttribute("data-theme") === "dark" ? "light" : "dark",
+        ),
+      );
+      const saved =
+        localStorage.getItem("portfolio-theme") ||
+        (window.matchMedia("(prefers-color-scheme: light)").matches
+          ? "light"
+          : "dark");
+      applyTheme(saved);
+
+      // Animate skill bars on load
+      window.addEventListener("load", () => {
+        setTimeout(() => {
+          document.querySelectorAll(".skill-fill").forEach((bar) => {
+            bar.style.width = bar.getAttribute("data-w") + "%";
+          });
+        }, 300);
+      });
+    </script>
+  </body>
 </html>

@@ -1,0 +1,1790 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Feature Demo — Portfolio Enhancements</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <style>
+      /* =============================================
+   DEMO PAGE — All Suggested Features Preview
+   ============================================= */
+
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap");
+
+      /* ── TOKENS ───────────────────────────── */
+      :root {
+        --p: #7c3aed;
+        --pl: #a78bfa;
+        --acc: #06b6d4;
+        --bg0: #030712;
+        --bg1: #0d1117;
+        --bg2: #161b27;
+        --t1: #f9fafb;
+        --t2: #9ca3af;
+        --t3: #4b5563;
+        --bdr: rgba(255, 255, 255, 0.07);
+        --glow: 0 0 30px rgba(124, 58, 237, 0.4);
+        --g1: linear-gradient(135deg, #7c3aed, #2563eb);
+        --g2: linear-gradient(135deg, #06b6d4, #10b981);
+        --tr: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        --ff: "Inter", sans-serif;
+        --fd: "Space Grotesk", sans-serif;
+      }
+
+      [data-theme="light"] {
+        --bg0: #f8fafc;
+        --bg1: #ffffff;
+        --bg2: #f1f5f9;
+        --t1: #0f172a;
+        --t2: #475569;
+        --t3: #94a3b8;
+        --bdr: rgba(0, 0, 0, 0.08);
+        --p: #6d28d9;
+        --pl: #7c3aed;
+      }
+
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: var(--ff);
+        background: var(--bg0);
+        color: var(--t1);
+        overflow-x: hidden;
+        cursor: none;
+        transition:
+          background 0.4s ease,
+          color 0.4s ease;
+      }
+
+      /* ── CUSTOM CURSOR ───────────────────── */
+      #cdot {
+        width: 8px;
+        height: 8px;
+        background: var(--pl);
+        border-radius: 50%;
+        position: fixed;
+        pointer-events: none;
+        z-index: 99999;
+        transform: translate(-50%, -50%);
+        mix-blend-mode: screen;
+        transition:
+          width 0.15s,
+          height 0.15s,
+          background 0.2s;
+      }
+      #cring {
+        width: 36px;
+        height: 36px;
+        border: 1.5px solid rgba(124, 58, 237, 0.6);
+        border-radius: 50%;
+        position: fixed;
+        pointer-events: none;
+        z-index: 99998;
+        transform: translate(-50%, -50%);
+        backdrop-filter: blur(2px);
+      }
+      #cdot.big {
+        width: 14px;
+        height: 14px;
+        background: var(--acc);
+      }
+      #cring.big {
+        width: 60px;
+        height: 60px;
+        border-color: rgba(6, 182, 212, 0.5);
+        background: rgba(6, 182, 212, 0.04);
+      }
+
+      @media (max-width: 768px) {
+        #cdot,
+        #cring {
+          display: none;
+        }
+        body {
+          cursor: auto;
+        }
+      }
+
+      /* ── PRELOADER ───────────────────────── */
+      #preloader {
+        position: fixed;
+        inset: 0;
+        background: var(--bg0);
+        z-index: 100000;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2rem;
+        transition:
+          opacity 0.6s ease,
+          visibility 0.6s ease;
+      }
+      #preloader.hidden {
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      .loader-word {
+        font-family: var(--fd);
+        font-size: clamp(2rem, 6vw, 4rem);
+        font-weight: 800;
+        background: var(--g1);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        letter-spacing: -0.03em;
+        opacity: 0;
+        animation: loaderWord 0.7s ease forwards;
+      }
+      @keyframes loaderWord {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .loader-bar-track {
+        width: min(300px, 80vw);
+        height: 3px;
+        background: rgba(255, 255, 255, 0.07);
+        border-radius: 3px;
+        overflow: hidden;
+      }
+      .loader-bar-fill {
+        height: 100%;
+        width: 0;
+        background: var(--g1);
+        border-radius: 3px;
+        animation: loadFill 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      }
+      @keyframes loadFill {
+        to {
+          width: 100%;
+        }
+      }
+
+      .loader-pct {
+        font-size: 0.85rem;
+        color: var(--t2);
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* ── SCROLL PROGRESS BAR ─────────────── */
+      #scroll-progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 3px;
+        width: 0%;
+        background: var(--g1);
+        z-index: 9999;
+        border-radius: 0 3px 3px 0;
+        transition: width 0.05s linear;
+        box-shadow: 0 0 10px rgba(124, 58, 237, 0.6);
+      }
+
+      /* ── SPOTLIGHT ───────────────────────── */
+      #spotlight {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        background: radial-gradient(
+          500px circle at -500px -500px,
+          rgba(124, 58, 237, 0.07),
+          transparent 70%
+        );
+        transition: background 0.05s;
+      }
+
+      /* ── NAVBAR ──────────────────────────── */
+      nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+        padding: 1rem 0;
+        background: rgba(3, 7, 18, 0);
+        transition:
+          background 0.3s,
+          backdrop-filter 0.3s,
+          border-color 0.3s;
+        border-bottom: 1px solid transparent;
+      }
+      nav.scrolled {
+        background: rgba(3, 7, 18, 0.85);
+        backdrop-filter: blur(20px);
+        border-color: var(--bdr);
+      }
+      .nav-inner {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .logo-txt {
+        font-family: var(--fd);
+        font-weight: 700;
+        font-size: 1.2rem;
+        background: var(--g1);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      /* Theme toggle */
+      #theme-toggle {
+        width: 50px;
+        height: 26px;
+        background: var(--bg2);
+        border: 1px solid var(--bdr);
+        border-radius: 100px;
+        cursor: pointer;
+        position: relative;
+        transition: var(--tr);
+        display: flex;
+        align-items: center;
+        padding: 0 3px;
+      }
+      .toggle-thumb {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: var(--g1);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.65rem;
+        color: #fff;
+        transform: translateX(0);
+        box-shadow: 0 0 8px rgba(124, 58, 237, 0.5);
+      }
+      [data-theme="light"] .toggle-thumb {
+        transform: translateX(24px);
+      }
+      .toggle-icon {
+        font-size: 0.7rem;
+      }
+
+      .back-link {
+        font-size: 0.82rem;
+        color: var(--t2);
+        text-decoration: none;
+        padding: 0.4rem 0.9rem;
+        border: 1px solid var(--bdr);
+        border-radius: 100px;
+        transition: var(--tr);
+      }
+      .back-link:hover {
+        color: var(--t1);
+        border-color: var(--pl);
+      }
+
+      /* ── DEMO SECTIONS ───────────────────── */
+      main {
+        position: relative;
+        z-index: 1;
+      }
+
+      .demo-section {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 6rem 2rem 4rem;
+        border-bottom: 1px solid var(--bdr);
+        position: relative;
+      }
+
+      .demo-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--pl);
+        background: rgba(124, 58, 237, 0.1);
+        border: 1px solid rgba(124, 58, 237, 0.25);
+        border-radius: 100px;
+        padding: 0.35rem 1rem;
+        margin-bottom: 1.5rem;
+      }
+      .demo-title {
+        font-family: var(--fd);
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        font-weight: 800;
+        text-align: center;
+        letter-spacing: -0.03em;
+        margin-bottom: 1rem;
+        background: var(--g1);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .demo-desc {
+        color: var(--t2);
+        font-size: 1rem;
+        text-align: center;
+        max-width: 520px;
+        line-height: 1.8;
+        margin-bottom: 3rem;
+      }
+      .demo-box {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--bdr);
+        border-radius: 24px;
+        padding: 3rem;
+        width: 100%;
+        max-width: 700px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      /* ── 1. PRELOADER PREVIEW ────────────── */
+      #trigger-preloader {
+        padding: 0.85rem 2rem;
+        background: var(--g1);
+        color: #fff;
+        border: none;
+        border-radius: 100px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--tr);
+        font-family: var(--ff);
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        box-shadow: 0 4px 20px rgba(124, 58, 237, 0.3);
+      }
+      #trigger-preloader:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 30px rgba(124, 58, 237, 0.5);
+      }
+
+      /* ── 2. MAGNETIC BUTTONS ─────────────── */
+      .magnet-demo {
+        display: flex;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .magnet-btn {
+        padding: 0.85rem 2rem;
+        border-radius: 100px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        border: none;
+        font-family: var(--ff);
+        transition: box-shadow 0.3s;
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        user-select: none;
+      }
+      .magnet-btn.primary {
+        background: var(--g1);
+        color: #fff;
+        box-shadow: 0 4px 20px rgba(124, 58, 237, 0.3);
+      }
+      .magnet-btn.ghost {
+        background: transparent;
+        color: var(--t1);
+        border: 1.5px solid var(--bdr);
+      }
+      .magnet-btn.accent {
+        background: var(--g2);
+        color: #fff;
+        box-shadow: 0 4px 20px rgba(6, 182, 212, 0.3);
+      }
+      .magnet-btn:hover.primary {
+        box-shadow: 0 8px 32px rgba(124, 58, 237, 0.6);
+      }
+      .magnet-btn:hover.ghost {
+        border-color: var(--pl);
+        color: var(--pl);
+      }
+      .magnet-note {
+        font-size: 0.8rem;
+        color: var(--t3);
+        text-align: center;
+      }
+
+      /* ── 3. DARK / LIGHT MODE ────────────── */
+      .theme-cards {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        width: 100%;
+      }
+      .theme-card {
+        border-radius: 16px;
+        padding: 1.5rem;
+        border: 2px solid transparent;
+        transition: var(--tr);
+        cursor: pointer;
+      }
+      .dark-card {
+        background: #0d1117;
+        border-color: rgba(124, 58, 237, 0.35);
+      }
+      .light-card {
+        background: #f1f5f9;
+        border-color: rgba(6, 182, 212, 0.35);
+      }
+      .dark-card h4 {
+        color: #f9fafb;
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+      }
+      .light-card h4 {
+        color: #0f172a;
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+      }
+      .dark-card p {
+        color: #9ca3af;
+        font-size: 0.85rem;
+      }
+      .light-card p {
+        color: #475569;
+        font-size: 0.85rem;
+      }
+      .mock-nav {
+        height: 10px;
+        border-radius: 5px;
+        margin-bottom: 0.75rem;
+      }
+      .dark-card .mock-nav {
+        background: rgba(255, 255, 255, 0.07);
+      }
+      .light-card .mock-nav {
+        background: rgba(0, 0, 0, 0.08);
+      }
+      .mock-lines div {
+        height: 6px;
+        border-radius: 3px;
+        margin-bottom: 0.4rem;
+      }
+      .dark-card .mock-lines div {
+        background: rgba(255, 255, 255, 0.06);
+      }
+      .light-card .mock-lines div {
+        background: rgba(0, 0, 0, 0.07);
+      }
+      .mock-lines div:first-child {
+        width: 80%;
+      }
+      .mock-lines div:nth-child(2) {
+        width: 60%;
+      }
+      .mock-lines div:last-child {
+        width: 70%;
+      }
+      .active-card {
+        box-shadow: 0 0 0 2px var(--p);
+      }
+
+      /* ── 4. TIMELINE ─────────────────────── */
+      .timeline {
+        position: relative;
+        width: 100%;
+        max-width: 580px;
+        padding-left: 2.5rem;
+      }
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 10px;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: linear-gradient(
+          180deg,
+          rgba(124, 58, 237, 0) 0%,
+          #7c3aed 20%,
+          #06b6d4 80%,
+          rgba(6, 182, 212, 0) 100%
+        );
+        border-radius: 2px;
+      }
+      .tl-item {
+        position: relative;
+        margin-bottom: 2rem;
+        opacity: 0;
+        transform: translateX(-20px);
+        transition:
+          opacity 0.5s ease,
+          transform 0.5s ease;
+      }
+      .tl-item.visible {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      .tl-dot {
+        position: absolute;
+        left: -2.3rem;
+        top: 0.3rem;
+        width: 14px;
+        height: 14px;
+        background: var(--g1);
+        border-radius: 50%;
+        border: 2px solid var(--bg0);
+        box-shadow: 0 0 12px rgba(124, 58, 237, 0.6);
+      }
+      .tl-date {
+        font-size: 0.75rem;
+        color: var(--pl);
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        margin-bottom: 0.3rem;
+      }
+      .tl-card {
+        background: var(--bg2);
+        border: 1px solid var(--bdr);
+        border-radius: 14px;
+        padding: 1rem 1.25rem;
+        transition: var(--tr);
+      }
+      .tl-card:hover {
+        border-color: rgba(124, 58, 237, 0.35);
+        transform: translateX(4px);
+      }
+      .tl-card h4 {
+        font-size: 1rem;
+        font-weight: 700;
+        margin-bottom: 0.25rem;
+      }
+      .tl-card p {
+        font-size: 0.85rem;
+        color: var(--t2);
+        line-height: 1.6;
+      }
+
+      /* ── 5. MODAL ────────────────────────── */
+      .modal-trigger-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.25rem;
+        width: 100%;
+      }
+      .mini-card {
+        background: var(--bg2);
+        border: 1px solid var(--bdr);
+        border-radius: 16px;
+        overflow: hidden;
+        cursor: pointer;
+        transition: var(--tr);
+      }
+      .mini-card:hover {
+        border-color: rgba(124, 58, 237, 0.35);
+        transform: translateY(-4px);
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+      }
+      .mini-banner {
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        color: rgba(255, 255, 255, 0.3);
+      }
+      .banner-a {
+        background: linear-gradient(135deg, #7c3aed, #2563eb);
+      }
+      .banner-b {
+        background: linear-gradient(135deg, #06b6d4, #10b981);
+      }
+      .banner-c {
+        background: linear-gradient(135deg, #f59e0b, #ef4444);
+      }
+      .banner-d {
+        background: linear-gradient(135deg, #10b981, #06b6d4);
+      }
+      .mini-body {
+        padding: 1rem;
+      }
+      .mini-body h4 {
+        font-size: 0.95rem;
+        font-weight: 700;
+        margin-bottom: 0.25rem;
+      }
+      .mini-body p {
+        font-size: 0.78rem;
+        color: var(--t2);
+      }
+      .click-hint {
+        font-size: 0.75rem;
+        color: var(--pl);
+        margin-top: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+      }
+
+      /* Modal overlay */
+      #modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(12px);
+        z-index: 50000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        visibility: hidden;
+        transition:
+          opacity 0.3s,
+          visibility 0.3s;
+        padding: 1rem;
+      }
+      #modal-overlay.open {
+        opacity: 1;
+        visibility: visible;
+      }
+      .modal-box {
+        background: var(--bg1);
+        border: 1px solid var(--bdr);
+        border-radius: 24px;
+        width: 100%;
+        max-width: 560px;
+        overflow: hidden;
+        transform: scale(0.95) translateY(20px);
+        transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      #modal-overlay.open .modal-box {
+        transform: scale(1) translateY(0);
+      }
+      .modal-banner {
+        height: 180px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 5rem;
+        color: rgba(255, 255, 255, 0.25);
+        position: relative;
+      }
+      .modal-close {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        color: #fff;
+        cursor: pointer;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: var(--tr);
+      }
+      .modal-close:hover {
+        background: rgba(239, 68, 68, 0.5);
+      }
+      .modal-body {
+        padding: 1.75rem;
+      }
+      .modal-body h3 {
+        font-size: 1.5rem;
+        font-weight: 800;
+        font-family: var(--fd);
+        margin-bottom: 0.75rem;
+      }
+      .modal-body p {
+        color: var(--t2);
+        line-height: 1.8;
+        margin-bottom: 1.5rem;
+        font-size: 0.95rem;
+      }
+      .modal-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+      }
+      .modal-tag {
+        padding: 0.25rem 0.75rem;
+        background: rgba(124, 58, 237, 0.12);
+        border: 1px solid rgba(124, 58, 237, 0.2);
+        border-radius: 100px;
+        font-size: 0.78rem;
+        color: var(--pl);
+        font-weight: 600;
+      }
+      .modal-actions {
+        display: flex;
+        gap: 0.75rem;
+      }
+      .modal-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.65rem 1.5rem;
+        border-radius: 100px;
+        font-size: 0.88rem;
+        font-weight: 600;
+        text-decoration: none;
+        cursor: pointer;
+        border: none;
+        font-family: var(--ff);
+        transition: var(--tr);
+      }
+      .modal-btn.prim {
+        background: var(--g1);
+        color: #fff;
+        box-shadow: 0 4px 16px rgba(124, 58, 237, 0.3);
+      }
+      .modal-btn.prim:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(124, 58, 237, 0.5);
+      }
+      .modal-btn.sec {
+        background: var(--bg2);
+        color: var(--t1);
+        border: 1px solid var(--bdr);
+      }
+      .modal-btn.sec:hover {
+        border-color: var(--pl);
+        color: var(--pl);
+      }
+
+      /* ── 6. SCROLL PROGRESS PREVIEW ──────── */
+      .progress-demo-wrap {
+        width: 100%;
+      }
+      .progress-demo-bar {
+        height: 4px;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.07);
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: 1.25rem;
+      }
+      .progress-demo-fill {
+        height: 100%;
+        width: 0;
+        background: var(--g1);
+        border-radius: 4px;
+        transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 0 8px rgba(124, 58, 237, 0.6);
+      }
+      .progress-steps {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .step-btn {
+        padding: 0.5rem 1.1rem;
+        border-radius: 100px;
+        border: 1px solid var(--bdr);
+        background: transparent;
+        color: var(--t2);
+        font-size: 0.82rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--tr);
+        font-family: var(--ff);
+      }
+      .step-btn:hover,
+      .step-btn.active {
+        border-color: var(--pl);
+        color: var(--pl);
+        background: rgba(124, 58, 237, 0.08);
+      }
+      .progress-pct-display {
+        font-family: var(--fd);
+        font-size: 3rem;
+        font-weight: 800;
+        background: var(--g1);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      /* ── BACK TO TOP ─────────────────────── */
+      #back-top {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        width: 48px;
+        height: 48px;
+        background: var(--g1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 1.1rem;
+        cursor: pointer;
+        border: none;
+        z-index: 5000;
+        opacity: 0;
+        transform: translateY(20px) scale(0.8);
+        transition:
+          opacity 0.3s,
+          transform 0.3s;
+        box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4);
+      }
+      #back-top.visible {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      #back-top:hover {
+        transform: translateY(-4px) scale(1.05);
+        box-shadow: 0 8px 28px rgba(124, 58, 237, 0.6);
+      }
+
+      /* ── SCROLL REVEAL ───────────────────── */
+      [data-reveal] {
+        opacity: 0;
+        transform: translateY(24px);
+        transition:
+          opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+          transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      [data-reveal].revealed {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      [data-delay="100"] {
+        transition-delay: 0.1s;
+      }
+      [data-delay="200"] {
+        transition-delay: 0.2s;
+      }
+      [data-delay="300"] {
+        transition-delay: 0.3s;
+      }
+
+      /* ── SECTION HEADERS ─────────────────── */
+      .section-head {
+        text-align: center;
+        margin-bottom: 2.5rem;
+      }
+      .feature-tag {
+        display: inline-block;
+        padding: 0.35rem 1rem;
+        background: rgba(6, 182, 212, 0.1);
+        border: 1px solid rgba(6, 182, 212, 0.25);
+        border-radius: 100px;
+        font-size: 0.72rem;
+        font-weight: 700;
+        color: var(--acc);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 0.75rem;
+      }
+
+      /* ── NAV DOTS ────────────────────────── */
+      .nav-dots {
+        position: fixed;
+        right: 1.5rem;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        z-index: 5000;
+      }
+      .nav-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--bdr);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        cursor: pointer;
+        transition: var(--tr);
+        position: relative;
+      }
+      .nav-dot:hover,
+      .nav-dot.active {
+        background: var(--pl);
+        box-shadow: 0 0 8px var(--pl);
+        transform: scale(1.4);
+      }
+      .nav-dot::after {
+        content: attr(data-label);
+        position: absolute;
+        right: 1.5rem;
+        top: 50%;
+        transform: translateY(-50%);
+        background: var(--bg1);
+        border: 1px solid var(--bdr);
+        border-radius: 6px;
+        padding: 0.25rem 0.6rem;
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: var(--t1);
+        white-space: nowrap;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s;
+      }
+      .nav-dot:hover::after {
+        opacity: 1;
+      }
+
+      @media (max-width: 768px) {
+        .nav-dots,
+        .modal-trigger-grid,
+        .theme-cards {
+          gap: 1rem;
+        }
+        .modal-trigger-grid,
+        .theme-cards {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ── PRELOADER ── -->
+    <div id="preloader">
+      <div class="loader-word">Kelvin.dev</div>
+      <div class="loader-bar-track">
+        <div class="loader-bar-fill" id="loader-fill"></div>
+      </div>
+      <div class="loader-pct" id="loader-pct">0%</div>
+    </div>
+
+    <!-- ── CURSOR ── -->
+    <div id="cdot"></div>
+    <div id="cring"></div>
+
+    <!-- ── SPOTLIGHT ── -->
+    <div id="spotlight"></div>
+
+    <!-- ── SCROLL PROGRESS ── -->
+    <div id="scroll-progress"></div>
+
+    <!-- ── BACK TO TOP ── -->
+    <button id="back-top" aria-label="Back to top" title="Back to top">
+      <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- ── MODAL ── -->
+    <div
+      id="modal-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
+    >
+      <div class="modal-box">
+        <div class="modal-banner banner-a" id="modal-banner">
+          <i id="modal-icon" class="fas fa-graduation-cap"></i>
+          <button class="modal-close" id="modal-close" aria-label="Close modal">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h3 id="modal-title">Project Title</h3>
+          <p id="modal-desc">Project description goes here.</p>
+          <div class="modal-tags" id="modal-tags"></div>
+          <div class="modal-actions">
+            <a href="#" class="modal-btn prim"
+              ><i class="fab fa-github"></i> View Code</a
+            >
+            <button class="modal-btn sec" onclick="closeModal()">
+              <i class="fas fa-times"></i> Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── NAV DOTS ── -->
+    <div class="nav-dots">
+      <div class="nav-dot" data-target="s1" data-label="Preloader"></div>
+      <div class="nav-dot" data-target="s2" data-label="Magnetic Btns"></div>
+      <div class="nav-dot" data-target="s3" data-label="Dark/Light"></div>
+      <div class="nav-dot" data-target="s4" data-label="Timeline"></div>
+      <div class="nav-dot" data-target="s5" data-label="Project Modal"></div>
+      <div class="nav-dot" data-target="s6" data-label="Progress Bar"></div>
+    </div>
+
+    <!-- ── NAVBAR ── -->
+    <nav id="navbar">
+      <div class="nav-inner">
+        <span class="logo-txt">✦ Feature Demo</span>
+        <div class="nav-right">
+          <button
+            id="theme-toggle"
+            title="Toggle theme"
+            aria-label="Toggle theme"
+          >
+            <div class="toggle-thumb">
+              <span class="toggle-icon" id="theme-icon">🌙</span>
+            </div>
+          </button>
+          <a href="index.html" class="back-link"
+            ><i class="fas fa-arrow-left"></i> Back to Portfolio</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      <!-- ══ S1: PRELOADER ══════════════════════ -->
+      <section class="demo-section" id="s1">
+        <div class="section-head" data-reveal>
+          <div class="demo-label">
+            <i class="fas fa-spinner"></i> Feature 01
+          </div>
+          <h2 class="demo-title">Animated Preloader</h2>
+          <p class="demo-desc">
+            A branded splash screen with a progress bar that fades out when the
+            page finishes loading. Creates an instant premium first impression.
+          </p>
+        </div>
+        <div class="demo-box" data-reveal data-delay="100">
+          <div style="text-align: center">
+            <p
+              style="color: var(--t2); font-size: 0.9rem; margin-bottom: 1.5rem"
+            >
+              The preloader already ran when you opened this page.<br />Click
+              below to replay it!
+            </p>
+            <button id="trigger-preloader">
+              <i class="fas fa-redo"></i> Replay Preloader
+            </button>
+          </div>
+          <div
+            style="
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              gap: 1rem;
+              width: 100%;
+            "
+          >
+            <div
+              style="
+                background: var(--bg2);
+                border: 1px solid var(--bdr);
+                border-radius: 14px;
+                padding: 1.25rem;
+              "
+            >
+              <div
+                style="
+                  font-size: 0.75rem;
+                  color: var(--pl);
+                  font-weight: 700;
+                  letter-spacing: 0.05em;
+                  text-transform: uppercase;
+                  margin-bottom: 0.5rem;
+                "
+              >
+                ✓ Features
+              </div>
+              <ul
+                style="
+                  color: var(--t2);
+                  font-size: 0.85rem;
+                  line-height: 2;
+                  list-style: none;
+                "
+              >
+                <li>🎨 Brand-coloured fill bar</li>
+                <li>📊 Live percentage counter</li>
+                <li>🌀 Smooth fade-out exit</li>
+                <li>🔒 Prevents scroll until ready</li>
+              </ul>
+            </div>
+            <div
+              style="
+                background: var(--bg2);
+                border: 1px solid var(--bdr);
+                border-radius: 14px;
+                padding: 1.25rem;
+              "
+            >
+              <div
+                style="
+                  font-size: 0.75rem;
+                  color: var(--acc);
+                  font-weight: 700;
+                  letter-spacing: 0.05em;
+                  text-transform: uppercase;
+                  margin-bottom: 0.5rem;
+                "
+              >
+                → Code Approach
+              </div>
+              <ul
+                style="
+                  color: var(--t2);
+                  font-size: 0.85rem;
+                  line-height: 2;
+                  list-style: none;
+                "
+              >
+                <li>Pure CSS animation</li>
+                <li>JS <code style="color: var(--pl)">window.onload</code></li>
+                <li>Opacity transition</li>
+                <li>No extra libraries</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ S2: MAGNETIC BUTTONS ═══════════════ -->
+      <section class="demo-section" id="s2">
+        <div class="section-head" data-reveal>
+          <div class="demo-label"><i class="fas fa-magnet"></i> Feature 02</div>
+          <h2 class="demo-title">Magnetic Buttons</h2>
+          <p class="demo-desc">
+            Buttons that attract toward your cursor as you hover near them — a
+            premium micro-interaction seen on award-winning sites.
+          </p>
+        </div>
+        <div class="demo-box" data-reveal data-delay="100">
+          <div class="magnet-demo" id="magnet-demo">
+            <button class="magnet-btn primary magnet" id="mb1">
+              <i class="fas fa-rocket"></i> Primary
+            </button>
+            <button class="magnet-btn ghost magnet" id="mb2">
+              <i class="fas fa-eye"></i> Ghost
+            </button>
+            <button class="magnet-btn accent magnet" id="mb3">
+              <i class="fas fa-bolt"></i> Accent
+            </button>
+          </div>
+          <p class="magnet-note">
+            <i class="fas fa-info-circle" style="color: var(--pl)"></i>
+            Move your cursor
+            <strong style="color: var(--t1)">slowly near</strong> the buttons —
+            they will pull toward you!
+          </p>
+          <div
+            style="
+              background: var(--bg2);
+              border: 1px solid var(--bdr);
+              border-radius: 14px;
+              padding: 1.25rem;
+              width: 100%;
+            "
+          >
+            <div
+              style="
+                font-size: 0.75rem;
+                color: var(--t3);
+                font-weight: 700;
+                letter-spacing: 0.05em;
+                text-transform: uppercase;
+                margin-bottom: 0.6rem;
+              "
+            >
+              How it works
+            </div>
+            <p style="font-size: 0.82rem; color: var(--t2); line-height: 1.7">
+              Tracks <code style="color: var(--pl)">mousemove</code> relative to
+              each button's bounding box. Within a radius (~80px), applies
+              <code style="color: var(--pl)">translate(x,y)</code> proportional
+              to cursor distance. On leave, springs back with CSS transition.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ S3: DARK / LIGHT MODE ══════════════ -->
+      <section class="demo-section" id="s3">
+        <div class="section-head" data-reveal>
+          <div class="demo-label"><i class="fas fa-adjust"></i> Feature 03</div>
+          <h2 class="demo-title">Dark / Light Mode</h2>
+          <p class="demo-desc">
+            A smooth theme toggle that switches the entire site using CSS
+            variables. Preference is saved to localStorage so it persists across
+            visits.
+          </p>
+        </div>
+        <div class="demo-box" data-reveal data-delay="100">
+          <p style="color: var(--t2); font-size: 0.9rem">
+            Use the
+            <strong style="color: var(--t1)">toggle in the navbar</strong>, or
+            click a theme card:
+          </p>
+          <div class="theme-cards">
+            <div
+              class="theme-card dark-card"
+              id="dark-card"
+              onclick="setTheme('dark')"
+            >
+              <div class="mock-nav"></div>
+              <div class="mock-lines">
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+              <h4>🌙 Dark Mode</h4>
+              <p>Deep, focused, easy on the eyes at night.</p>
+            </div>
+            <div
+              class="theme-card light-card"
+              id="light-card"
+              onclick="setTheme('light')"
+            >
+              <div class="mock-nav"></div>
+              <div class="mock-lines">
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+              <h4>☀️ Light Mode</h4>
+              <p>Clean, professional for bright environments.</p>
+            </div>
+          </div>
+          <p style="font-size: 0.78rem; color: var(--t3); text-align: center">
+            <i class="fas fa-save" style="color: var(--pl)"></i>
+            &nbsp;Your preference is saved in <code>localStorage</code>
+          </p>
+        </div>
+      </section>
+
+      <!-- ══ S4: TIMELINE ════════════════════════ -->
+      <section class="demo-section" id="s4">
+        <div class="section-head" data-reveal>
+          <div class="demo-label"><i class="fas fa-stream"></i> Feature 04</div>
+          <h2 class="demo-title">Experience Timeline</h2>
+          <p class="demo-desc">
+            A vertical timeline for education, milestones, or achievements.
+            Items animate in as you scroll into view.
+          </p>
+        </div>
+        <div
+          class="demo-box"
+          data-reveal
+          data-delay="100"
+          style="align-items: flex-start"
+        >
+          <div class="timeline">
+            <div class="tl-item">
+              <div class="tl-dot"></div>
+              <div class="tl-date">2023 — Present</div>
+              <div class="tl-card">
+                <h4>BCA Student</h4>
+                <p>
+                  St. Xavier's College, Jaipur — Building ERP systems, AI
+                  assistants, and web apps while pursuing my degree.
+                </p>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div
+                class="tl-dot"
+                style="
+                  background: linear-gradient(135deg, #06b6d4, #10b981);
+                  box-shadow: 0 0 12px rgba(6, 182, 212, 0.6);
+                "
+              ></div>
+              <div class="tl-date">2024</div>
+              <div class="tl-card">
+                <h4>St. Xavier's ERP</h4>
+                <p>
+                  Built a full college ERP system with TypeScript — student
+                  records, admin tools, and academic workflows.
+                </p>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div
+                class="tl-dot"
+                style="
+                  background: linear-gradient(135deg, #f59e0b, #ef4444);
+                  box-shadow: 0 0 12px rgba(245, 158, 11, 0.6);
+                "
+              ></div>
+              <div class="tl-date">2024</div>
+              <div class="tl-card">
+                <h4>OmniDesktop AI</h4>
+                <p>
+                  Developed a sophisticated desktop AI assistant with computer
+                  vision, voice, and gesture controls.
+                </p>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div
+                class="tl-dot"
+                style="
+                  background: linear-gradient(135deg, #10b981, #06b6d4);
+                  box-shadow: 0 0 12px rgba(16, 185, 129, 0.6);
+                "
+              ></div>
+              <div class="tl-date">2025</div>
+              <div class="tl-card">
+                <h4>Gesture Control System</h4>
+                <p>
+                  Built real-time hand gesture recognition using OpenCV for
+                  controlling virtual overlays and 3D drawing.
+                </p>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div
+                class="tl-dot"
+                style="
+                  background: linear-gradient(135deg, #a78bfa, #7c3aed);
+                  box-shadow: 0 0 12px rgba(167, 139, 250, 0.6);
+                "
+              ></div>
+              <div class="tl-date">2026 →</div>
+              <div class="tl-card">
+                <h4>Graduation & Beyond</h4>
+                <p>
+                  Graduating from St. Xavier's, ready to make an impact in AI
+                  and software development. 🚀
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ S5: PROJECT MODAL ═══════════════════ -->
+      <section class="demo-section" id="s5">
+        <div class="section-head" data-reveal>
+          <div class="demo-label">
+            <i class="fas fa-layer-group"></i> Feature 05
+          </div>
+          <h2 class="demo-title">Project Detail Modals</h2>
+          <p class="demo-desc">
+            Click any project card to open a rich modal overlay with full
+            description, tags, and links. No page navigation needed.
+          </p>
+        </div>
+        <div class="demo-box" data-reveal data-delay="100">
+          <div class="modal-trigger-grid">
+            <div class="mini-card" onclick="openModal('erp')">
+              <div class="mini-banner banner-a">
+                <i class="fas fa-graduation-cap"></i>
+              </div>
+              <div class="mini-body">
+                <h4>St. Xavier's ERP</h4>
+                <p>TypeScript · Web App</p>
+                <div class="click-hint">
+                  <i class="fas fa-expand-alt"></i> Click to expand
+                </div>
+              </div>
+            </div>
+            <div class="mini-card" onclick="openModal('fences')">
+              <div class="mini-banner banner-b">
+                <i class="fas fa-network-wired"></i>
+              </div>
+              <div class="mini-body">
+                <h4>OpenFences</h4>
+                <p>C# · .NET · Open Source</p>
+                <div class="click-hint">
+                  <i class="fas fa-expand-alt"></i> Click to expand
+                </div>
+              </div>
+            </div>
+            <div class="mini-card" onclick="openModal('anidox')">
+              <div class="mini-banner banner-c">
+                <i class="fas fa-globe"></i>
+              </div>
+              <div class="mini-body">
+                <h4>Anidox</h4>
+                <p>HTML · CSS · JS</p>
+                <div class="click-hint">
+                  <i class="fas fa-expand-alt"></i> Click to expand
+                </div>
+              </div>
+            </div>
+            <div class="mini-card" onclick="openModal('omni')">
+              <div class="mini-banner banner-d">
+                <i class="fas fa-robot"></i>
+              </div>
+              <div class="mini-body">
+                <h4>OmniDesktop AI</h4>
+                <p>Python · OpenCV · AI</p>
+                <div class="click-hint">
+                  <i class="fas fa-expand-alt"></i> Click to expand
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ S6: SCROLL PROGRESS ════════════════ -->
+      <section class="demo-section" id="s6">
+        <div class="section-head" data-reveal>
+          <div class="demo-label"><i class="fas fa-tasks"></i> Feature 06</div>
+          <h2 class="demo-title">Scroll Progress Bar</h2>
+          <p class="demo-desc">
+            Live reading-progress indicator at the top of the page. Shows
+            exactly how far through the content the user has scrolled.
+          </p>
+        </div>
+        <div class="demo-box" data-reveal data-delay="100">
+          <div class="progress-demo-wrap">
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 0.6rem;
+              "
+            >
+              <span style="font-size: 0.8rem; color: var(--t2)"
+                >Scroll position</span
+              >
+              <span class="progress-pct-display" id="pct-display">0%</span>
+            </div>
+            <div class="progress-demo-bar">
+              <div class="progress-demo-fill" id="prog-fill"></div>
+            </div>
+            <div class="progress-steps">
+              <button class="step-btn" onclick="setProgress(0)">0%</button>
+              <button class="step-btn" onclick="setProgress(25)">25%</button>
+              <button class="step-btn" onclick="setProgress(50)">50%</button>
+              <button class="step-btn" onclick="setProgress(75)">75%</button>
+              <button class="step-btn" onclick="setProgress(100)">100%</button>
+            </div>
+          </div>
+          <p
+            style="
+              font-size: 0.82rem;
+              color: var(--t2);
+              text-align: center;
+              line-height: 1.7;
+            "
+          >
+            The real bar is pinned at the
+            <strong style="color: var(--t1)">very top</strong> of this page
+            right now — try scrolling up and down to see it move live.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      // ── CURSOR ──────────────────────────────────
+      const dot = document.getElementById("cdot");
+      const ring = document.getElementById("cring");
+      let mx = -100,
+        my = -100,
+        rx = -100,
+        ry = -100;
+      document.addEventListener("mousemove", (e) => {
+        mx = e.clientX;
+        my = e.clientY;
+        dot.style.left = mx + "px";
+        dot.style.top = my + "px";
+      });
+      (function anim() {
+        rx += (mx - rx) * 0.14;
+        ry += (my - ry) * 0.14;
+        ring.style.left = rx + "px";
+        ring.style.top = ry + "px";
+        requestAnimationFrame(anim);
+      })();
+      document
+        .querySelectorAll(
+          "a,button,.mini-card,.magnet-btn,.modal-btn,.theme-card,.step-btn,.back-link,.nav-dot",
+        )
+        .forEach((el) => {
+          el.addEventListener("mouseenter", () => {
+            dot.classList.add("big");
+            ring.classList.add("big");
+          });
+          el.addEventListener("mouseleave", () => {
+            dot.classList.remove("big");
+            ring.classList.remove("big");
+          });
+        });
+
+      // ── SPOTLIGHT ───────────────────────────────
+      const spotlight = document.getElementById("spotlight");
+      document.addEventListener("mousemove", (e) => {
+        spotlight.style.background = `radial-gradient(500px circle at ${e.clientX}px ${e.clientY}px, rgba(124,58,237,0.07), transparent 70%)`;
+      });
+
+      // ── PRELOADER ───────────────────────────────
+      const preloader = document.getElementById("preloader");
+      const loaderPct = document.getElementById("loader-pct");
+      let pctVal = 0;
+      function runPreloader() {
+        preloader.classList.remove("hidden");
+        preloader.style.pointerEvents = "all";
+        document.getElementById("loader-fill").style.animation = "none";
+        void document.getElementById("loader-fill").offsetWidth;
+        document.getElementById("loader-fill").style.animation =
+          "loadFill 2s cubic-bezier(.4,0,.2,1) forwards";
+        pctVal = 0;
+        loaderPct.textContent = "0%";
+        const timer = setInterval(() => {
+          pctVal = Math.min(pctVal + Math.round(1 + Math.random() * 3), 100);
+          loaderPct.textContent = pctVal + "%";
+          if (pctVal >= 100) {
+            clearInterval(timer);
+            setTimeout(() => {
+              preloader.classList.add("hidden");
+              preloader.style.pointerEvents = "none";
+            }, 400);
+          }
+        }, 40);
+      }
+      document
+        .getElementById("trigger-preloader")
+        .addEventListener("click", runPreloader);
+      // Auto run on load
+      window.addEventListener("load", () => {
+        setTimeout(() => {
+          preloader.classList.add("hidden");
+          preloader.style.pointerEvents = "none";
+        }, 2200);
+      });
+      pctVal = 0;
+      const initTimer = setInterval(() => {
+        pctVal = Math.min(pctVal + Math.round(1 + Math.random() * 3), 100);
+        loaderPct.textContent = pctVal + "%";
+        if (pctVal >= 100) clearInterval(initTimer);
+      }, 40);
+
+      // ── NAVBAR SCROLL ────────────────────────────
+      const navbar = document.getElementById("navbar");
+      const scrollBar = document.getElementById("scroll-progress");
+      const backTop = document.getElementById("back-top");
+      const pctDisplay = document.getElementById("pct-display");
+      window.addEventListener(
+        "scroll",
+        () => {
+          const s = window.scrollY;
+          if (s > 60) navbar.classList.add("scrolled");
+          else navbar.classList.remove("scrolled");
+          if (s > 300) backTop.classList.add("visible");
+          else backTop.classList.remove("visible");
+          const h = document.body.scrollHeight - window.innerHeight;
+          const pct = Math.round((s / h) * 100);
+          scrollBar.style.width = pct + "%";
+          if (pctDisplay) pctDisplay.textContent = pct + "%";
+          updateNavDots();
+        },
+        { passive: true },
+      );
+      backTop.addEventListener("click", () =>
+        window.scrollTo({ top: 0, behavior: "smooth" }),
+      );
+
+      // ── THEME TOGGLE ─────────────────────────────
+      const html = document.documentElement;
+      const themeIcon = document.getElementById("theme-icon");
+      const darkCard = document.getElementById("dark-card");
+      const lightCard = document.getElementById("light-card");
+      function setTheme(t) {
+        html.setAttribute("data-theme", t);
+        localStorage.setItem("portfolio-theme", t);
+        themeIcon.textContent = t === "dark" ? "🌙" : "☀️";
+        if (t === "dark") {
+          darkCard.classList.add("active-card");
+          lightCard.classList.remove("active-card");
+        } else {
+          lightCard.classList.add("active-card");
+          darkCard.classList.remove("active-card");
+        }
+      }
+      document
+        .getElementById("theme-toggle")
+        .addEventListener("click", () =>
+          setTheme(
+            html.getAttribute("data-theme") === "dark" ? "light" : "dark",
+          ),
+        );
+      const saved = localStorage.getItem("portfolio-theme");
+      setTheme(saved || "dark");
+
+      // ── MAGNETIC BUTTONS ─────────────────────────
+      document.querySelectorAll(".magnet").forEach((btn) => {
+        btn.addEventListener("mousemove", (e) => {
+          const r = btn.getBoundingClientRect();
+          const cx = r.left + r.width / 2,
+            cy = r.top + r.height / 2;
+          const dx = e.clientX - cx,
+            dy = e.clientY - cy;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          const radius = 90;
+          if (dist < radius) {
+            const strength = (radius - dist) / radius;
+            btn.style.transform = `translate(${dx * strength * 0.4}px,${dy * strength * 0.4}px)`;
+          }
+        });
+        btn.addEventListener("mouseleave", () => {
+          btn.style.transform = "";
+        });
+      });
+
+      // ── MODAL ─────────────────────────────────────
+      const projects = {
+        erp: {
+          title: "St. Xavier's ERP",
+          icon: "fas fa-graduation-cap",
+          banner: "banner-a",
+          desc: "A comprehensive college ERP system built with TypeScript, streamlining administrative tasks, student records, and academic processes. Features role-based access, grade management, and a real-time dashboard.",
+          tags: ["TypeScript", "Web App", "Database", "ERP", "Node.js"],
+          link: "https://github.com/kelvinkbk/stxavier-erp",
+        },
+        fences: {
+          title: "OpenFences",
+          icon: "fas fa-network-wired",
+          banner: "banner-b",
+          desc: "An open-source C# project focused on creating innovative solutions for network management and system organization. Built on .NET with a clean architecture pattern and extensive unit testing.",
+          tags: ["C#", ".NET", "Open Source", "Networking"],
+          link: "https://github.com/kelvinkbk/OpenFences",
+        },
+        anidox: {
+          title: "Anidox",
+          icon: "fas fa-globe",
+          banner: "banner-c",
+          desc: "A modern web application featuring dynamic HTML design and interactive user interface elements with smooth CSS animations, a clean component system, and responsive layout — all without frameworks.",
+          tags: ["HTML5", "CSS3", "JavaScript", "Responsive"],
+          link: "https://github.com/kelvinkbk/anidox",
+        },
+        omni: {
+          title: "OmniDesktop AI",
+          icon: "fas fa-robot",
+          banner: "banner-d",
+          desc: "A sophisticated AI desktop assistant with multi-modal capabilities: computer vision via webcam, LLM-powered conversations (Gemini + Groq), voice I/O, gesture controls, and desktop automation.",
+          tags: ["Python", "OpenCV", "Gemini API", "AI", "MediaPipe"],
+          link: "https://github.com/kelvinkbk",
+        },
+      };
+      const overlay = document.getElementById("modal-overlay");
+      function openModal(key) {
+        const p = projects[key];
+        if (!p) return;
+        document.getElementById("modal-title").textContent = p.title;
+        document.getElementById("modal-desc").textContent = p.desc;
+        document.getElementById("modal-icon").className = p.icon;
+        document.getElementById("modal-banner").className =
+          "modal-banner " + p.banner;
+        document.querySelector(".modal-btn.prim").href = p.link;
+        const tagsEl = document.getElementById("modal-tags");
+        tagsEl.innerHTML = p.tags
+          .map((t) => `<span class="modal-tag">${t}</span>`)
+          .join("");
+        overlay.classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+      function closeModal() {
+        overlay.classList.remove("open");
+        document.body.style.overflow = "";
+      }
+      document
+        .getElementById("modal-close")
+        .addEventListener("click", closeModal);
+      overlay.addEventListener("click", (e) => {
+        if (e.target === overlay) closeModal();
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeModal();
+      });
+
+      // ── SCROLL REVEAL ─────────────────────────────
+      const ro = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("revealed");
+              ro.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -40px 0px" },
+      );
+      document
+        .querySelectorAll("[data-reveal]")
+        .forEach((el) => ro.observe(el));
+
+      // ── TIMELINE REVEAL ───────────────────────────
+      const tlObs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              const items = e.target.querySelectorAll(".tl-item");
+              items.forEach((item, i) => {
+                setTimeout(() => item.classList.add("visible"), i * 180);
+              });
+              tlObs.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.1 },
+      );
+      document.querySelectorAll(".timeline").forEach((el) => tlObs.observe(el));
+
+      // ── PROGRESS BAR DEMO ─────────────────────────
+      function setProgress(p) {
+        document.getElementById("prog-fill").style.width = p + "%";
+        document.querySelector(".progress-pct-display").textContent = p + "%";
+        document.querySelectorAll(".step-btn").forEach((b) => {
+          b.classList.toggle("active", parseInt(b.textContent) === p);
+        });
+      }
+      setProgress(0);
+
+      // ── NAV DOTS ──────────────────────────────────
+      const dots = document.querySelectorAll(".nav-dot");
+      dots.forEach((d) => {
+        d.addEventListener("click", () => {
+          document
+            .getElementById(d.dataset.target)
+            ?.scrollIntoView({ behavior: "smooth" });
+        });
+      });
+      function updateNavDots() {
+        const sy = window.scrollY + window.innerHeight / 2;
+        ["s1", "s2", "s3", "s4", "s5", "s6"].forEach((id, i) => {
+          const el = document.getElementById(id);
+          if (!el) return;
+          const active =
+            sy >= el.offsetTop && sy < el.offsetTop + el.offsetHeight;
+          dots[i]?.classList.toggle("active", active);
+        });
+      }
+      updateNavDots();
+    </script>
+  </body>
+</html>
